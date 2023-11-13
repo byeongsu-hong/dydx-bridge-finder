@@ -40,7 +40,9 @@ type Coin = {
 
 const BASE_URL = "https://dydx-dao-api-1.polkachu.com";
 
-class DelayedMessagesSingleton {
+// ${BASE_URL}/cosmos/distribution/v1beta1/delegators/${delegator}/rewards
+
+class QuerySingleton {
   private messages: DelayedMessage[] | undefined = undefined;
 
   constructor() {}
@@ -62,7 +64,7 @@ class DelayedMessagesSingleton {
 }
 
 function App() {
-  const delayedMessagesSingleton = new DelayedMessagesSingleton();
+  const querySingleton = new QuerySingleton();
 
   const [block, setBlock] = useState<{ height: number; time: number }>();
   const [searchedMessages, setSearchedMessages] = useState<DelayedMessage[]>();
@@ -85,7 +87,7 @@ function App() {
       });
 
       // search messages
-      delayedMessagesSingleton.get().then((messages) => {
+      querySingleton.get().then((messages) => {
         console.log({ messages, address });
 
         const searched = messages.filter(
